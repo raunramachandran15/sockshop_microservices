@@ -1,22 +1,18 @@
 pipeline {
    agent any
-
    environment {
-
      SERVICE_NAME = "testing"
    }
-
    stages {
       stage('Preparation') {
          steps {
             sh "echo preparation started"
-            error("This will fail")
-            sh "echo arun15"
+            sh "echo arpreparation completed"
          }
       }
       stage('Build and Push Image') {
          steps {
-           sh 'docker-compose -f docker-compose.yaml up -d'
+           sh './test.sh'
          }
       }
    }

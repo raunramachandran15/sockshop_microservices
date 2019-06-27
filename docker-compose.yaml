@@ -175,4 +175,5 @@ services:
     command: "-d 60 -r 200 -c 2 -h edge-router"
   integration-tester:
     image: integration_test_v1:v3
+    container_name: integration_test_container
   
