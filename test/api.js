@@ -1,21 +1,18 @@
 var assert = require('assert');
 var request = require('supertest');
 var http_call = require('request');
-http_call('http://localhost/cart', function (error, response, body) {
-  console.log('error:', error); 
-  console.log('statusCode:', response && response.statusCode); 
-  console.log('body:', body); 
+http_call('http://192.168.1.5/cart', function (error, response, body) {
+    console.log('error:', error);
+    console.log('statusCode:', response && response.statusCode);
+    console.log('body:', body);
 });
-
-
 describe('Cart operations', function () {
 
-	var  agent;
-	before(function (done) {
-		agent = request('http://localhost');
-		  done();
+    var agent;
+    before(function (done) {
+        agent = request('http://192.168.1.5');
+        done();
     });
-    
     describe('🙏  add product to cart', function () {
         it('product should be added', function (done) {
             agent
@@ -33,10 +30,9 @@ describe('Cart operations', function () {
                 .get('/cart')
                 .expect(200)
                 .end(function (err, res) {
-                    console.log(err,res.body);
+                    console.log(err, res.body);
                     done(err);
                 });
         });
     });
-
 });
