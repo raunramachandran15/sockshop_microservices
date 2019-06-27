@@ -19,6 +19,7 @@ RUN apk add --no-cache maven \
     py-pip \
     python-dev libffi-dev openssl-dev gcc libc-dev make \
     gettext
+RUN pip install docker-compose
 
 # Kubectl
 RUN  wget https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl

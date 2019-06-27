@@ -9,6 +9,8 @@ pipeline {
    stages {
       stage('Preparation') {
          steps {
+            sh "echo preparation started"
+            error("This will fail")
             sh "echo arun15"
          }
       }
