@@ -1,16 +1,10 @@
 var assert = require('assert');
 var request = require('supertest');
-var http_call = require('request');
-http_call('http://192.168.1.5/cart', function (error, response, body) {
-    console.log('error:', error);
-    console.log('statusCode:', response && response.statusCode);
-    console.log('body:', body);
-});
-describe('Cart operations', function () {
 
+describe('Cart operations', function () {
     var agent;
     before(function (done) {
-        agent = request('http://192.168.1.5');
+        agent = request('http://172.17.0.1');
         done();
     });
     describe('🙏  add product to cart', function () {
