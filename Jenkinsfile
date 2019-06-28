@@ -7,7 +7,7 @@ pipeline {
       stage('Preparation') {
          steps {
             sh "echo preparation started"
-            sh "echo arpreparation completed"
+            sh "echo preparation completed"
          }
       }
       stage('Build and Push Image') {

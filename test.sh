@@ -14,12 +14,13 @@ if [ $? -ne 0 ] ; then
 fi
 TEST_EXIT_CODE=`docker wait integration_test_container`
 docker logs integration_test_container
+
 if [ -z ${TEST_EXIT_CODE+x} ] || [ "$TEST_EXIT_CODE" -ne 0 ] ; then
   printf "${RED}Tests Failed${NC} - Exit Code: $TEST_EXIT_CODE\n"
 else
   printf "${GREEN}Tests Passed${NC}\n"
 fi
-
+cleanup
 echo 'Testing completed'
 exit $TEST_EXIT_CODE
 

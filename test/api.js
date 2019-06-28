@@ -14,7 +14,7 @@ describe('Cart operations', function () {
                 .send({
                     "id": "03fef6ac-1896-4ce8-bd69-b798f85c6e0b"
                 })
-                .expect(503)
+                .expect(201)
                 .end(function (err, res) {
                     done(err);
                 });
