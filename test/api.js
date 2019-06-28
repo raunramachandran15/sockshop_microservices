@@ -4,7 +4,7 @@ var request = require('supertest');
 describe('Cart operations', function () {
     var agent;
     before(function (done) {
-        agent = request('http://172.17.0.1');
+        agent = request('http://192.168.1.5');
         done();
     });
     describe('🙏  add product to cart', function () {
