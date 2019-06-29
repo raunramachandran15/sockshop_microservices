@@ -1,10 +1,12 @@
 var assert = require('assert');
 var request = require('supertest');
 
+console.log(process.env.host);
 describe('Cart operations', function () {
-    var agent;
+    var agent, url = `http://${process.env.host}`;
     before(function (done) {
-        agent = request('http://192.168.1.5');
+	console.log('Inside before test and url :', url)
+        agent = request(url);
         done();
     });
     describe('🙏  add product to cart', function () {

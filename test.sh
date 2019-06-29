@@ -1,7 +1,8 @@
+#!/bin/bash
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
-echo 'Testing started'
+echo 'Testing started for url $hostname'
 cleanup () {
   docker-compose -p ci kill
   docker-compose -p ci rm -f
@@ -16,11 +17,11 @@ TEST_EXIT_CODE=`docker wait integration_test_container`
 docker logs integration_test_container
 
 if [ -z ${TEST_EXIT_CODE+x} ] || [ "$TEST_EXIT_CODE" -ne 0 ] ; then
-  printf "${RED}Tests Failed${NC} - Exit Code: $TEST_EXIT_CODE\n"
+  printf "${RED}Ouch !!! Tests Failed${NC} - Exit Code: $TEST_EXIT_CODE\n"
 else
-  printf "${GREEN}Tests Passed${NC}\n"
+  printf "${GREEN}Yayyyy!!! Tests Passed${NC}\n"
 fi
 cleanup
-echo 'Testing completed'
+echo 'Anyways Testing completed'
 exit $TEST_EXIT_CODE
 
