@@ -8,7 +8,7 @@ cleanup () {
   docker-compose -p ci rm -f
 }
 trap 'cleanup ; printf "${RED}Tests Failed For Unexpected Reasons${NC}\n"' HUP INT QUIT PIPE TERM
-docker build -t integration_test:latest
+docker build -t integration_test:latest .
 docker-compose -p ci -f  docker-compose.yaml up -d
 if [ $? -ne 0 ] ; then
   printf "${RED}Docker Compose Failed${NC}\n"
