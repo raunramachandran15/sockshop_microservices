@@ -12,7 +12,7 @@ pipeline {
       }
       stage('Build and Push Image') {
          steps {
-           sh './test.sh'
+           sh './jenkinstest.sh'
          }
       }
    }
