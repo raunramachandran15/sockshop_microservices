@@ -1,4 +1,16 @@
+DockerCompose :
+#######################################
 docker-compose -p int -f  docker-compose.yaml up -d
+
+
+Jenkins and Portrainer :
+#######################################
 
 docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
 docker run -d -p 8089:8080 -p 50001:50000 --name MyJenkins --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/jenkins-store:/var/jenkins_home -e JAVA_OPTS -Djenkins.install.runSetupWizard=false
+
+
+Load Test : 
+#######################################
+/usr/local/bin/runLocust.sh -d 60 -r 200 -c 2 -h edge-router
+tail -f /dev/null

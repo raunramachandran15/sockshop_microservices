@@ -2,14 +2,12 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
-echo 'Testing started for url $hostname'
+echo 'Testing started for url $host'
 cleanup () {
-  docker rmi integration_tester
   docker-compose -p ci kill
   docker-compose -p ci rm -f
 }
 trap 'cleanup ; printf "${RED}Tests Failed For Unexpected Reasons${NC}\n"' HUP INT QUIT PIPE TERM
-docker build -t integration_tester:latest .
 docker-compose -p ci -f  docker-compose.yaml up -d
 if [ $? -ne 0 ] ; then
   printf "${RED}Docker Compose Failed${NC}\n"

@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-env" : "host={$host} ./node_modules/mocha/bin/mocha",
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha test/cart.test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "mocha": "^6.1.4",
     "request": "^2.88.0",
-    "supertest": "^4.0.2"
+    "superagent": "^5.1.0",
+    "supertest": "^4.0.2",
+    "supertest-session": "^4.0.0"
   }
 }
