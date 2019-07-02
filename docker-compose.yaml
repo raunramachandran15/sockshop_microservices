@@ -60,6 +60,8 @@ services:
     image: mongo:3.4
     hostname: carts-db
     restart: always
+    ports:
+      - '27017:27017'
     cap_drop:
       - all
     cap_add:
