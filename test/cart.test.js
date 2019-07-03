@@ -68,10 +68,10 @@ describe('Cart operations with login', function () {
         it('Update the quantity of product in cart', function (done) {
             var product = sockshopData.product;
             product.quantity = 10;
-            var reque = authAgent.post(`/cart`)
+            var reque = authAgent.post(`/cart/update`)
                 .send(product)
                 .set('Accept', 'application/json')
-                .expect(201)
+                .expect(202)
                 .end(function (err, res) {
                     //connect to DB and check if exists or not
                     return done(err);
@@ -86,7 +86,7 @@ describe('Cart operations with login', function () {
                 .expect(function (res) {
                     var cartItems = JSON.parse(res.text)
                     assert.equal(cartItems[0].itemId, sockshopData.product.id);
-                    assert.equal(cartItems[0].quantity, 2);
+                    assert.equal(cartItems[0].quantity, 10);
                 })
                 .end(function (err, res) {
                     return done(err);
