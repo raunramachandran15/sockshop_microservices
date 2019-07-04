@@ -26,3 +26,4 @@ until $(curl --output /dev/null --silent --head --fail http://$host); do
 done
 echo $host 'Service available'
 npm test
+
