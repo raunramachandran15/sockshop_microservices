@@ -1,29 +1,17 @@
 var assert = require('assert'),
-    request = require('supertest'),
+    assert = require('chai').assert,
+    supertest = require('supertest'),
     assert = require("assert"),
     stsession = require('supertest-session'),
-    assert = require('chai').assert,
     sockshopData = require('./data'),
+    MongoClient = require('mongodb').MongoClient,
     host = '13.233.13.86',
     url = `http://${host}`,
     agent = stsession(url),
-    authAgent = {};
-
-var MongoClient = require('mongodb').MongoClient;
-// Connect to the db
-MongoClient.connect("mongodb://carts-db:27017/data", function (err, client) {
-     var db = client.db('data')
-     if(err) throw err; 
-
-     console.log('Mongodb connected to mongodb://carts-db:27017/data')
-     const collection = db.collection('cart');
-     //Remove cart documents
-     collection.remove({}).then(function(err, docs) {
-        console.log("Removed all cart documents from db");
-     });
-});
-
-
+    guestAgent = stsession(url),
+    agentWithoutCookies = supertest(url);
+    authAgent = {}, 
+    Cart= {},Item= {};
 
 describe('Cart operations with login', function () {
     before(function (done) {
@@ -36,7 +24,7 @@ describe('Cart operations with login', function () {
             .set('Authorization', `Basic ${authorization}`)
             .expect(200)
             .then(function (res) {
-                console.log('User logged in', res.text);
+                console.log('   User logged in', res.text);
                 authAgent = agent;
                 done();
             }).catch((err) => {
@@ -68,42 +56,75 @@ describe('Cart operations with login', function () {
         it('Update the quantity of product in cart', function (done) {
             var product = sockshopData.product;
             product.quantity = 10;
-            var reque = authAgent.post(`/cart`)
+            authAgent.post(`/cart/update`)
                 .send(product)
                 .set('Accept', 'application/json')
-                .expect(201)
+                .expect(202)
                 .end(function (err, res) {
                     //connect to DB and check if exists or not
                     return done(err);
                 });
         });
-        it('Get productand check quantity of product in cart', function (done) {
+        it('Get product and check updated quantity of items in cart ', function (done) {
             var product = sockshopData.product;
             product.quantity = 10;
-            var reque = authAgent.get(`/cart`)
+            authAgent.get(`/cart`)
                 .set('Accept', 'application/json')
                 .expect(200)
                 .expect(function (res) {
                     var cartItems = JSON.parse(res.text)
                     assert.equal(cartItems[0].itemId, sockshopData.product.id);
-                    assert.equal(cartItems[0].quantity, 2);
+                    assert.equal(cartItems[0].quantity, 10);
+                })
+                .end(function (err, res) {
+                    return done(err);
+                });
+        });
+        it('Get product without cookies should return empty ', function (done) {
+            agentWithoutCookies.get(`/cart`)
+                .set('Accept', 'application/json')
+                .expect(200)
+                .expect(function (res) {
+                    var cartItems = JSON.parse(res.text)
+                    assert.equal(cartItems.length,0);
                 })
                 .end(function (err, res) {
                     return done(err);
                 });
         });
         it('Delete the product in cart', function (done) {
-            var reque = authAgent.delete(`/cart/${sockshopData.product.id}`)
+            authAgent.delete(`/cart/${sockshopData.product.id}`)
                 .set('Accept', 'application/json')
                 .expect(202)
                 .end(function (err, res) {
                     return done(err);
                 });
         });
-
     })
-
 });
 
+describe('Cart operations without login using cookies', function () {
+    describe('Add first product to cart and check', function () {
+        it('Add first product', function (done) {
+            guestAgent.post('/cart')
+                .send(sockshopData.product).set('Accept', 'application/json')
+                .expect(201)
+                .end(function (err, res) {
+                    return done(err);
+                });
+        });
+        it('Added product is the only item in cart', function (done) {
+            guestAgent.get('/cart')
+                .set('Accept', 'application/json')
+                .expect(200)
+                .expect('Content-Type', /text/)
+                .expect(function (res) {
+                    var cartItems = JSON.parse(res.text)
+                    assert.equal(cartItems[0].itemId, sockshopData.product.id);
+                    assert.equal(cartItems[0].quantity, 1);
+                })
+                .end(done)
+        });
 
-
+    })
+});
