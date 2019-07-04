@@ -4,8 +4,9 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 echo 'Testing started for url $host'
 cleanup () {
-  docker-compose -p ci kill
-  docker-compose -p ci rm -f
+  docker-compose -p ci down -v
+  # docker-compose -p ci kill
+  # docker-compose -p ci rm -f
 }
 trap 'cleanup ; printf "${RED}Tests Failed For Unexpected Reasons${NC}\n"' HUP INT QUIT PIPE TERM
 docker-compose -p ci -f  docker-compose.yaml up -d
