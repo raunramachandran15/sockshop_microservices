@@ -176,6 +176,6 @@ services:
     hostname: user-simulator
     command: "-d 60 -r 200 -c 2 -h edge-router"
   integration-tester:
-    build: .
+    image : integration_tester:latest
     container_name: integration_test_container
     env_file: .env 

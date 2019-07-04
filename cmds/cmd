@@ -10,7 +10,11 @@ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portaine
 docker run -d -p 8089:8080 -p 50001:50000 --name MyJenkins --restart always -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/jenkins-store:/var/jenkins_home -e JAVA_OPTS -Djenkins.install.runSetupWizard=false
 
 
+
 Load Test : 
 #######################################
 /usr/local/bin/runLocust.sh -d 60 -r 200 -c 2 -h edge-router
 tail -f /dev/null
+
+
+docker run   --env HOST='13.233.13.86' integration_tester:latest

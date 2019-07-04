@@ -4,7 +4,7 @@
 #
 #####################################################################
 
-INITIAL_DELAY=${HOST:-60}
+INITIAL_DELAY=${INITIAL_DELAY:-60}
 TARGET_HOST=${HOST:-edge-router}
 SERVICES=${SERVICES:-cart,user}
 
