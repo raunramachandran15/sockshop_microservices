@@ -26,7 +26,7 @@ do_exec() {
   read -ra SERVICES <<< "$SERVICES"
   # get_test_suit "${SERVICES[@]}"
 
-  # check if host is running
+  # check if host is running | 
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${TARGET_HOST}) 
   if [ $STATUS -ne 200 ]; then
       echo "${TARGET_HOST} is not accessible"
