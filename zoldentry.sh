@@ -2,7 +2,7 @@
 attempt_counter=0
 max_attempts=20
 while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://$HOST/cart)" != "200" ]]; do 
-	echo $servicename ' service not available'
+	echo 'cart service not available'
 	if [ ${attempt_counter} -eq ${max_attempts} ];then
           echo "Max attempts reached"
           exit 1
