@@ -1,7 +1,7 @@
 #!/bin/bash
 attempt_counter=0
 max_attempts=20
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://$host/cart)" != "200" ]]; do 
+while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://$HOST/cart)" != "200" ]]; do 
 	echo '$servicename service not available'
 	if [ ${attempt_counter} -eq ${max_attempts} ];then
           echo "Max attempts reached"
@@ -12,9 +12,9 @@ while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://$host/cart)" != "200
   attempt_counter=$(($attempt_counter+1))
 	sleep 5; 	
 done
-curl http://$host/cart | echo
-echo 'curl :' $host
-until $(curl --output /dev/null --silent --head --fail http://$host); do
+curl http://$HOST/cart | echo
+echo 'curl :' $HOST
+until $(curl --output /dev/null --silent --head --fail http://$HOST); do
     if [ ${attempt_counter} -eq ${max_attempts} ];then
       echo "Max attempts reached"
       exit 1
@@ -24,6 +24,7 @@ until $(curl --output /dev/null --silent --head --fail http://$host); do
     attempt_counter=$(($attempt_counter+1))
     sleep 5
 done
-echo $host 'Service available'
+echo $HOST 'Service available'
 npm test
+echo 'Done!'
 

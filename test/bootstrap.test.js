@@ -2,6 +2,7 @@ var { user } = require('./data'),
     stsession = require('supertest-session'),
     host = process.env.HOST,
     url = `http://${host}`,
+    dbhost = process.env.DBHOST,
     sockshopData = require('./data'),
     agent = stsession(url),
     guestAgent = stsession(url),
@@ -30,7 +31,7 @@ describe('Test suite initialization', function () {
         done();
     });
     after((done) => {
-        MongoClient.connect(`mongodb://13.233.13.86:27017`,{useNewUrlParser: true}, async function (err, client) {
+        MongoClient.connect(`mongodb://${dbhost}:27017`,{useNewUrlParser: true}, async function (err, client) {
             db = client.db('data')
             if (err) throw err;
             Cart = db.collection('cart');

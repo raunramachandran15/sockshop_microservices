@@ -28,6 +28,7 @@ do_exec() {
 
   # check if host is running | 
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${TARGET_HOST}) 
+  echo $STATUS ": http status"
   if [ $STATUS -ne 200 ]; then
       echo "${TARGET_HOST} is not accessible"
       exit 1
